@@ -1,9 +1,30 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import Joi from 'joi';
+import { NodeEnv } from './config/types/node-env.enum';
+import { MongooseModule } from '@nestjs/mongoose';
+import { AppConfigType } from './config/types/app-config.type';
 
 @Module({
-  imports: [],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal:true,
+      validationSchema: Joi.object({
+        PORT: Joi.number().default(3000),
+        NODE_ENV: Joi.string().valid(...Object.values(NodeEnv)).default(NodeEnv.DEVELOPMENT),
+        DEV_DB_URI: Joi.string().required() ,
+        PROD_DB_URI: Joi.string().required()
+      })
+    }),
+    MongooseModule.forRootAsync({
+      inject:[ConfigService],
+      useFactory: (config:ConfigService<AppConfigType>) => ({
+        uri: config.getOrThrow('db',{infer:true}).uri
+      })
+    })
+  ],
   controllers: [AppController],
   providers: [AppService],
   
