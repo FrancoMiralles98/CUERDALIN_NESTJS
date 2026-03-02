@@ -9,6 +9,8 @@ import { AppConfigType } from './config/types/app-config.type';
 import { appConfig } from './config/app-config';
 import { dbConfig } from './config/db-config';
 import { authConfig } from './config/auth-config';
+import { UserModule } from './user/user.module';
+import { SharedModule } from './shared/shared.module';
 
 @Module({
   imports: [
@@ -27,7 +29,9 @@ import { authConfig } from './config/auth-config';
       useFactory: (config:ConfigService<AppConfigType>) => ({
         uri: config.getOrThrow('db',{infer:true}).uri
       })
-    })
+    }),
+    UserModule,
+    SharedModule
   ],
   controllers: [AppController],
   providers: [AppService],
