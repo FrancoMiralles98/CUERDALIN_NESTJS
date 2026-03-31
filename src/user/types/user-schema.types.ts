@@ -5,3 +5,14 @@ export interface DatosUsuario {
     telefono: number,
     cumpleanos?: Date
 }
+
+export interface Direccion {
+    aclaracion?: string,
+    altura?: number,
+    calle?: string,
+    cp?: number,
+    localidad?: string,
+    piso?: string,
+    provincia: string
+}
+

@@ -7,3 +7,4 @@ export const DATOS_USUARIO_DEFAULT: DatosUsuario = {
     telefono: 0,
     cumpleanos: undefined,
 }
+

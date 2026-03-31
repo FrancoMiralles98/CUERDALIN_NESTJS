@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument } from "mongoose";
 import { DATOS_USUARIO_DEFAULT } from "../const/user-schema.const";
+import type { DatosUsuario, Direccion } from "../types/user-schema.types";
 
 @Schema({ timestamps: true })
 export class User {
@@ -14,13 +15,13 @@ export class User {
     email: string
 
     @Prop({ type: Array, default: [] })
-    favoritos: []
+    favoritos: string[]
 
     @Prop({ type: Object, default: DATOS_USUARIO_DEFAULT })
-    datos_usuario: {}
+    datos_usuario: DatosUsuario
 
     @Prop({ type: Array, default: [] })
-    direcciones: []
+    direcciones: Direccion[]
 }
 
 export type UserDocument = HydratedDocument<User>
